@@ -15,19 +15,12 @@ var app = new Vue({
       "weekly_effort_target": 400
     }
   },
-  computed: {
-    target_date_pretty: function() {
-      return this.displayDate(this.project.target_date)
-    }
-  },
   methods: {
-    displayDate: function (d) {
-      return new Date(d).toLocaleDateString( // FIX: Presumes UTC
-        'en-US', {
-          day : 'numeric',
-          month : 'short',
-          year : 'numeric'
-      })
+    prettyDate: function (d) {
+      return moment(d).format('l')
+    },
+    daysLeft: function (d) {
+      return moment(d).diff(moment(), 'days')
     }
   }
   // ,
