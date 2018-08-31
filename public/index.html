@@ -13,8 +13,8 @@
   </head>
   <body>
 
-    <div class="container-fluid">
-      <h1>Project Name</h1>
+    <div class="container-fluid" id="app">
+      <h1>Project Name {{ project.name }}</h1>
       <div class="row">
         <div class="col placeholder">
           Completion %
@@ -24,7 +24,7 @@
           <div class="row">
             <div class="col">
               <h2>Due date</h2>
-              <div class="ban">3 Nov 2018</div>
+              <div class="ban">{{ target_date_pretty }}</div>
             </div>
             <div class="col">
               <h2>Days Remaining</h2>
@@ -105,6 +105,10 @@
 
       </div> <!-- end row 3, tabular data -->
     </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/dashboard.js"></script>
+
     <script src="js/tablesort.min.js"></script>
     <script>
       // Tablesort plugin from http://tristen.ca/tablesort/demo/
