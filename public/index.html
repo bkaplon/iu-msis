@@ -38,8 +38,9 @@
 </head>
 <body>
 
-  <div class="container-fluid">
-    <h1>Project Name</h1>
+  <div id="dashboard" class="container-fluid">
+    <h1>{{ name }}</h1>
+    <p><em>{{ short_description }}</em</p>
     <div class="row">
       <div class="col placeholder">
         Completion %
@@ -120,6 +121,10 @@
 
     </div> <!-- end row 3, tabular data -->
   </div>
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="js/app.js"></script>
+
   <script src="js/tablesort.min.js"></script>
   <script>
       // Tablesort plugin from http://tristen.ca/tablesort/demo/
