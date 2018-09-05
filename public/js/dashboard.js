@@ -3,7 +3,7 @@
  **/
 var dashboardChartsApp = new Vue({
   el: '#topCharts',
-  data: {
+  data: { // should create an empty version of the schema here, as a best practice
       name : "Tapestry",
       short_description: "Build a visualization layer for the project dashboard",
       start_date : "2018-07-01",
@@ -28,9 +28,19 @@ var dashboardChartsApp = new Vue({
     }
   }
   // ,
+  // beforeCreate () {
+  //   console.log('beforeCreate test')
+  // }
+  // ,
   // created () {
-  //   fetch("project1.json")
+  //   const self = this;
+  //   fetch("https://raw.githubusercontent.com/tag/iu-msis/dev/public/project1.json")
   //     .then( response => response.json() )
-  //     .then( json => {this.project = json; console.log(json)} );
+  //     .then( json => {
+  //       //this.project = json;
+  //       console.log(json)
+  //       // TODO: foreach property, overwrite
+  //       }
+  //     );
   //   }
 })
