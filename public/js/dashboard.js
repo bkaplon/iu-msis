@@ -25,6 +25,16 @@ var dashboardChartsApp = new Vue({
   methods: {
     prettyDate: function (d) {
       return moment(d).format('l')
+    },
+    prettyCurrency: function(n, places = 1) {
+      if (n < 1e3)
+        return '$ ' + n.toFixed(0);
+
+      if (n < 1e6)
+        return '$ ' + (n/1e3).toFixed(places) + ' k';
+
+      //if (n < 1e9)
+      return '$ ' + (n/1e6).toFixed(places) + ' M';
     }
   }
   // ,
