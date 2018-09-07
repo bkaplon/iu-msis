@@ -22,6 +22,17 @@ var dashboardApp = new Vue({
   methods: {
     pretty_date: function (d) {
       return moment(d).format('l')
+    },
+    pretty_currency: function (val) {
+      if (val < 1e3) {
+        return '$ ' + val
+      }
+
+      if (val < 1e6) {
+        return '$ ' + (val/1e3).toFixed(1) + ' k'
+      }
+
+      return '$ ' + (val/1e6).toFixed(1) + ' M'
     }
   }
 })
