@@ -11,14 +11,14 @@ var dashboardApp = new Vue({
     "weekly_effort_target": 400,
     tasks: [
       {
-        "id": 0,
-        "title": '',
+        id: 0,
+        title: '',
         "type" : '',
         "size" : '',
         "team" : '',
         "status": '',
         "start_date": '',
-        "close_date": null,
+        "close_date": '',
         "hours_worked": '',
         "perc_complete": '',
         "current_sprint" : ''
@@ -38,11 +38,12 @@ var dashboardApp = new Vue({
     log (msg) {
       alert(msg);
     },
-    fetchTasks() {
+    fetchTasks: function () {
       fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/public/p1-tasks.json')
       .then( response => response.json() )
       .then( function(json) {
-        this.tasks = json;
+        console.log(this);
+        dashboardApp.tasks = json; // 'this' is being bound to global, instead of to our Vue
         console.log(json);
       })
       .catch( function(err) {
