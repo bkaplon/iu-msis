@@ -47,7 +47,7 @@
           </tr>
         </thead>
         <tbody v-for="w in work"
-        key="w.id"
+        :key="w.id"
         :id="'task-' + task.id + '-work-' + w.id">
           <td>{{w.start}}</td>
           <td>{{w.stop}}</td>

@@ -91,7 +91,21 @@ var tasksApp = new Vue({
       return this.work.reduce( (sum, current) => sum + current.hours, 0 )
     },
     diffAsHours() {
-      return moment().duration(end.diff(startTime)).asHours();
+      return 0 //moment().duration(end.diff(startTime)).asHours();
     }
+  },
+  created () {
+    console.log(window.location.href);
+
+    const url = new URL(window.location.href);
+    const taskId = url.searchParams.get("taskId");
+
+    console.log('Task: '+ taskId);
+    if (!taskId) {
+      //TODO: Error? 404?
+      //e.g., window.location = '404.html';
+    }
+
+    // TODO: Fetch task-specific data
   }
 })
