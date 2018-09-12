@@ -78,6 +78,7 @@ var tasksApp = new Vue({
       const s = JSON.stringify(this.workForm);
       //TODO: POST to remote server
       //TODO: Append result
+
       this.work.push(JSON.parse(s));
 
       // Reset workForm
@@ -88,7 +89,10 @@ var tasksApp = new Vue({
       }
     },
     sumHours() {
-      return this.work.reduce( (sum, current) => sum + current.hours, 0 )
+      return this.work.reduce(
+        (sum, current) => sum + current.hours,
+        0
+      )
     },
     diffAsHours() {
       return 0 //moment().duration(end.diff(startTime)).asHours();
@@ -99,6 +103,8 @@ var tasksApp = new Vue({
 
     const url = new URL(window.location.href);
     const taskId = url.searchParams.get("taskId");
+
+    this.task.id = taskId;
 
     console.log('Task: '+ taskId);
     if (!taskId) {
