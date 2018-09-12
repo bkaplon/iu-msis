@@ -1,5 +1,17 @@
 {
-  "task": 4,
+  "task": {
+    "id": 4,
+    "title": "Completion % not saving",
+    "type" : "Bug",
+    "size" : "XS",
+    "team" : "Luke's Parents",
+    "status": "Open",
+    "start_date": "2018-07-29",
+    "close_date": "",
+    "hours_worked": 17,
+    "perc_complete": 80,
+    "current_sprint" : false
+  },
   "work": [
     {
       "id": 101,
