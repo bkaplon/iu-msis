@@ -66,10 +66,12 @@ var tasksApp = new Vue({
   },
   methods: {
     handleWorkForm(e) {
-      // TODO: Check validity
       e.preventDefault();
+
+      // TODO: Check validity
+
+
       console.log(e);
-      alert(JSON.stringify(this.workForm));
 
       // TODO: Calculate hours
       // something like:  moment.duration(end.diff(startTime)).asHours();
@@ -77,6 +79,9 @@ var tasksApp = new Vue({
       //TODO: clone workForm
       const s = JSON.stringify(this.workForm);
       //TODO: POST to remote server
+      // fetch(url,)
+      // .then()
+
       //TODO: Append result
       this.work.push(JSON.parse(s));
 
@@ -98,14 +103,16 @@ var tasksApp = new Vue({
     console.log(window.location.href);
 
     const url = new URL(window.location.href);
-    const taskId = url.searchParams.get("taskId");
+    const taskId = url.searchParams.get('taskId');
 
     console.log('Task: '+ taskId);
+
     if (!taskId) {
       //TODO: Error? 404?
       //e.g., window.location = '404.html';
     }
 
     // TODO: Fetch task-specific data
+    // fetch('api/task?id=4')
   }
 })

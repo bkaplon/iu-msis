@@ -81,15 +81,15 @@
               <hr>
                 <h3>Add work</h3>
 
-                <form action="#" v-on:submit.prevent="handleWorkForm">
-                  <p>Start: <input type="datetime-local" name="start" value=""></p>
-                  <p>End: <input type="datetime-local" name="stop"></p>
+                <form @submit.prevent="handleWorkForm">
+                  <p>Start: <input type="datetime-local" name="start" value="" v-model="workForm.start" required></p>
+                  <p>End: <input type="datetime-local" name="stop" value="" v-model="workForm.stop" required></p>
                   <p>Logged work period is <strong>?? hours</strong></p>
                   <p>
                     Completion estimate
-                    <input type="numeric" name="completion_estimate" v-model.lazy="workForm.completion_estimate">
+                    <input type="numeric" name="completion_estimate" v-model.lazy="workForm.completion_estimate" required>
                   </p>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                   <button type="submit" class="btn btn-primary">Save changes</button>
                 </form>
               <!-- </div>
