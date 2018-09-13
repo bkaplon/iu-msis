@@ -25,7 +25,7 @@ var tasksApp = new Vue({
       {
         "id": 101,
         "start": "2018-07-29T08:30",
-        "stop": "2018-07-29T011:30",
+        "stop": "2018-07-29T11:30",
         "hours": 3,
         "completion_estimate": 0.10
       },
@@ -58,10 +58,13 @@ var tasksApp = new Vue({
         "completion_estimate": 0.85
       }
     ],
-    workForm: {
-      start: '',
-      stop: '',
-      completion_estimate: ''
+    workForm: { }   // populated by this.getEmptyWorkForm()
+  },
+  computed: {
+    workSpan () {
+      return moment(this.workForm.stop)
+             .diff(moment(this.workForm.start), 'hours', true)
+             .toFixed(1);
     }
   },
   methods: {
@@ -86,20 +89,34 @@ var tasksApp = new Vue({
       this.work.push(JSON.parse(s));
 
       // Reset workForm
-      this.workForm = {
-        start: '',
-        stop: '',
-        completion_estimate: ''
-      }
+      this.workForm = this.getEmptyWorkForm();
     },
     sumHours() {
       return this.work.reduce( (sum, current) => sum + current.hours, 0 )
     },
     diffAsHours() {
       return 0 //moment().duration(end.diff(startTime)).asHours();
+    },
+    datetimeFormat(d) {
+      d = d || moment();
+      return moment(d).format('YYYY-MM-DD[T]HH:MM');
+    },
+    getEmptyWorkForm() {
+      return {
+        start: this.datetimeFormat(),
+        stop: this.datetimeFormat(),
+        completion_estimate: 0
+      }
+    },
+    prettyDate(d) {
+      return moment(d).format('YYYY-MM-DD HH:MM')
     }
   },
   created () {
+    // Populate workForm with default values
+    this.workForm = this.getEmptyWorkForm();
+
+    // Do data fetch
     console.log(window.location.href);
 
     const url = new URL(window.location.href);
