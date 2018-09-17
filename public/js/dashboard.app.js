@@ -24,6 +24,7 @@ var dashboardApp = new Vue({
         hours_worked: '',
         perc_complete: '',
         current_sprint : ''
+        
       }
     ],
     filter: {
