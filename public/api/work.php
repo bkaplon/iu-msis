@@ -1,38 +1,19 @@
 <?php
 
-echo '<pre>';
+require '../../app/common.php';
 
+$taskId = intval($_GET['taskId'] ?? 0);
 
-echo "string one" . " 1" . "\n";
-
-class Animal
-{
-  public $type = 'Pig';
+if ($taskId < 1) {
+  throw new Exception('Invalid Task ID');
 }
 
-$wilber = new Animal();
 
-echo $wilber->type ."\n";
+// 1. Go to the database and get all work associated with the $taskId
+$workArr = Work::getAllWorkByTask($taskId);
 
-$arr = [];
+// 2. Convert to JSON
+$json = json_encode($workArr);
 
-$arr = [
-  'first' => 'Tom',
-  'last' => 'Gregory'
-];
-
-$arrToo = ['one','two','three'];
-
-print_r($arr);
-var_dump($arrToo);
-
-$n = 3;
-if ($n == 5) {
-  echo 'n is big';
-} else {
-  echo 'n is small';
-}
-
-for ($i=0; $i<5; $i++) {
-  // Do stuff
-}
+// 3. Print
+echo $json;
