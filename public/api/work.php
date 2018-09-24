@@ -9,4 +9,4 @@ $taskId = intval($_GET['taskId'] ?? 0);
 $work = Work::findByTaskId($taskId);
 
 // convert to json and print
-echo json_encode($work);
+echo json_encode($work); 
