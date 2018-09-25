@@ -40,7 +40,7 @@ class Work
 
     $statement = $db->prepare($sql);
 
-    // 3. Run the results
+    // 3. Run the query
     $success = $statement->execute(
         [$taskId]
     );
