@@ -16,4 +16,5 @@ $workArr = Work::getWorkByTaskId($taskId);
 $json = json_encode($workArr, JSON_PRETTY_PRINT);
 
 // 3. Print
+header('Content-Type: application/json');
 echo $json;
