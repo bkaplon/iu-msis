@@ -9,4 +9,5 @@ $taskId = $_GET['taskId'] ?? 0;
 $work = Work::findByTaskId($taskId);
 
 // convert to JSON and print
+header('Content-type: applicaiton/json');
 echo json_encode($work);
