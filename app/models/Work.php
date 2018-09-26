@@ -31,7 +31,7 @@ class Work
     $this->completion_estimate = intval($row['completion_estimate']);
   }
 
-  public static function findByTaskId(int $taskId) {
+  public static function getWorkByTaskId(int $taskId) {
     // 1. Connect to the database
     $db = new PDO(DB_SERVER, DB_USER, DB_PW);
 
@@ -53,9 +53,7 @@ class Work
 
       array_push($arr, $workItem);
     }
-
-    // 4.b. return the array of work objects
-
     return $arr;
   }
+
 }
