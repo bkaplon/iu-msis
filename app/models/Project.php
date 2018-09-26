@@ -5,11 +5,11 @@
 class Project
 {
 
-  public static function findById($id) {
+  public static function fetchById($id) {
 
   }
 
-  public static function findAll() {
+  public static function fetchAll() {
 
   }
 }
