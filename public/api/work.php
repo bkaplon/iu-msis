@@ -2,12 +2,19 @@
 
 require '../../app/common.php';
 
-// Get the taskId
-$taskId = $_GET['taskId'] ?? 0;
+$taskId = intval($_GET['taskId'] ?? 0);
 
-// Fetch Work from database
-$work = Work::findByTaskId($taskId);
+if ($taskId < 1) {
+  throw new Exception('Invalid Task ID');
+}
 
-// convert to JSON and print
-header('Content-type: applicaiton/json');
-echo json_encode($work);
+
+// 1. Go to the database and get all work associated with the $taskId
+$workArr = Work::getWorkByTaskId($taskId);
+
+// 2. Convert to JSON
+$json = json_encode($workArr, JSON_PRETTY_PRINT);
+
+// 3. Print
+header('Content-Type: application/json');
+echo $json;
