@@ -55,8 +55,8 @@ var dashboardApp = new Vue({
         return 'alert-warning'
       }
     },
-    fetchTasks () {
-      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/public/p1-tasks.json')
+    fetchTasks (pid) {
+      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/app/data/p1-tasks.json')
       .then( response => response.json() )
       // ^ This is the same as .then( function(response) {return response.json()} )
       .then( json => {dashboardApp.tasks = json} )
@@ -65,8 +65,8 @@ var dashboardApp = new Vue({
         console.log(err);
       })
     },
-    fetchProject () {
-      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/public/project1.json')
+    fetchProject (pid) {
+      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/app/data/project1.json')
       .then( response => response.json() )
       .then( json => {dashboardApp.project = json} )
       .catch( err => {
@@ -74,12 +74,39 @@ var dashboardApp = new Vue({
         console.log(err);
       })
     },
+    fetchProjectWork (pid) {
+      fetch('api/workHours.php?projectId=' + pid)
+      .then( response => response.json() )
+      .then( json => {
+        dashboardApp.workHours = json;
+        this.formatWorkHours();
+        // this.buildEffortChart();
+      })
+      .catch( err => {
+        console.log('PROJECT HOURS FETCH ERROR:');
+        console.log(err);
+      })
+    },
+    formatWorkHours() {
+      this.workHours.forEach(
+        function(entry, index, arr) {
+          entry.date = Date.parse(entry.date);
+          entry.hours = Number(entry.hours);
+
+          entry.runningTotalHours = entry.hours +
+            (index == 0 ? 0 : arr[index-1].runningTotalHours);
+        }
+      );
+      console.log(this.workHours);
+    },
     gotoTask(tid) {
       window.location = 'task.html?taskId=' + tid;
     }
   },
   created () {
-    this.fetchProject();
-    this.fetchTasks();
+    // TODO: GET param projectId
+    this.fetchProject(1);
+    this.fetchTasks(1);
+    this.fetchProjectWork(1);
   }
 })
