@@ -73,3 +73,9 @@ th[role=columnheader]:not(.no-sort):hover:after {
 	visibility: visible;
 	opacity: 1;
 }
+
+/** Charts! **/
+#chartEffort {
+  width:100%;
+  height:200px;
+}

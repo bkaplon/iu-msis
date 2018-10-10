@@ -67,8 +67,8 @@ var dashboardApp = new Vue({
         return 'alert-warning'
       }
     },
-    fetchTasks () {
-      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/public/p1-tasks.json')
+    fetchTasks (pid) {
+      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/app/data/p1-tasks.json' ) //api/tasks.php?projectId='+pid)
       .then( response => response.json() )
       .then( json => {dashboardApp.tasks = json} )
       .catch( err => {
@@ -76,22 +76,97 @@ var dashboardApp = new Vue({
         console.log(err);
       })
     },
-    fetchProject () {
-      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/public/project1.json')
+    fetchProject (pid) {
+      fetch('https://raw.githubusercontent.com/tag/iu-msis/dev/app/data/project1.json')
       .then( response => response.json() )
-      .then( json => {dashboardApp.project = json} )
+      .then( json => {dashboardApp.project = json})
       .catch( err => {
         console.log('PROJECT FETCH ERROR:');
         console.log(err);
       })
     },
-    gotoTask(tid) {
+    fetchProjectHours (pid) {
+      fetch('api/workHours.php?projectId='+pid)
+      .then( response => response.json() )
+      .then( json => {
+        // Clean the data?
+
+        // Update Vue model
+        dashboardApp.workHours = json;
+
+        dashboardApp.buildWorkHoursChart();
+      })
+      .catch( err => {
+        console.log('PROJECT HOURS FETCH ERROR:');
+        console.log(err);
+      })
+    },
+    gotoTask (tid) {
       // alert ('Clicked: ' + tid)
       window.location = 'task.html?taskId=' + tid;
+    },
+    buildWorkHoursChart () {
+      console.log('Build chart here');
+
+      /**
+        Data currently looks like
+        [
+          {date: '2018-08-01', 'hours':3},
+          {date: '2018-08-02', 'hours':5},
+          ...
+        ]
+
+        But needs to look like
+        [
+          [ <JS Date object>, 3],
+          [ <JS Date object>, 5],
+          ...
+        ]
+      **/
+      this.workHours.forEach( (entry, index, arr) => {
+        entry.hours = Number(entry.hours);
+        entry.runningTotalHours = entry.hours + (index > 0 ? arr[index-1].runningTotalHours: 0);
+      });
+
+      var transformedData = this.workHours.map(
+        entry => [Date.parse(entry.date), entry.runningTotalHours] // Have to convert the types!
+      );
+      console.log(transformedData);
+
+      var myChart = Highcharts.chart('chartEffort', {
+        title: {
+            text: 'Cumulative Effort'
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            title: {
+                text: 'Hours'
+            }
+        },
+        legend: {
+                enabled: false
+            },
+        series: [{
+                type: 'area',
+                name: 'Total hours',
+                data: transformedData
+            }]
+    });
+
     }
   },
   created () {
-    this.fetchProject();
-    this.fetchTasks();
+    const url = new URL(window.location.href);
+    this.projectId = url.searchParams.get('projectId');
+
+    if (!this.projectId) {
+      console.error('Project Id not found in URL parameter.');
+    }
+
+    this.fetchProject(this.projectId);
+    this.fetchTasks(this.projectId);
+    this.fetchProjectHours(this.projectId);
   }
 })
