@@ -24,7 +24,6 @@ var dashboardApp = new Vue({
         hours_worked: '',
         perc_complete: '',
         current_sprint : ''
-
       }
     ],
     filter: {
@@ -94,6 +93,7 @@ var dashboardApp = new Vue({
         // Update Vue model
         dashboardApp.workHours = json;
 
+        // Now that the data has been returned, we can build a chart with it:
         dashboardApp.buildWorkHoursChart();
       })
       .catch( err => {
